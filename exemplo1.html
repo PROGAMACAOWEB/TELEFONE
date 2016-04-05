@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      #lista1,#lista2 {
+        background-color: yellow;
+        color: navy;
+      }
+    </style>
+  </head>
+  <body>
+<h1> Lista Telefónica </h1>
+<div id="controlo">
+<button id="bmostra">Mostra Listas </button>
+</div>
+<div id="divinput">
+  <input type="text" id="inome" placeholder="Insira o nome"/>
+  <input type="text" id="iapelido" placeholder="Insira o apelido"/>
+  <input type="text" id="itelefone" placeholder="Insira o telefone"/>
+  <input type="button" id="binsere" value="insere"/>
+</div>
+<div id="lista1" class="listaT"></div>
+<div id="lista2" class="listaT">
+  <ul>
+    <li> Pedro Moreira 999888777 </li>
+    <li> Paulos Costa 987987978 </li>
+    <li> Carlos Silva 987987987 </li>
+  </ul>
+</div>
+  </body>
+
+
+  <script type="text/javascript">
+    var info = [
+      {"nome":"Pedro","apelido":"Moreira","telefone":"999888777"},
+      {"nome":"Paula","apelido":"Ramos","telefone":"966778865"},
+      {"nome":"Carlos","apelido":"Silva","telefone":"912332156"}
+    ];
+
+    var info2 = {"lista" :[
+      {"nome":"Carla","apelido":"Pereira","telefone":"999888777"},
+      {"nome":"Ana","apelido":"Moura","telefone":"966778865"},
+      {"nome":"Luís","apelido":"Machado","telefone":"912332156"}
+    ]};
+
+
+    // insere novos registos na lista 3
+
+    document.getElementById("binsere").addEventListener("click", function () {
+      var nome = document.getElementById("inome").value;
+      var apelido = document.getElementById("iapelido").value;
+      var telefone = document.getElementById("itelefone").value;
+
+      // verificação simples
+
+      if (nome == "" || telefone == "") {
+        alert("tem que introduzir dados");
+        return;
+      } else {
+        // criar um objecto
+        var novoregisto = {"nome":nome, "apelido":apelido, "telefone":telefone};
+        // inserir na info2
+        info2.lista.push(novoregisto);
+
+        console.log(info2);
+        refreshlista3();
+
+      }
+
+
+
+
+    });
+
+
+
+    // mostra esconde listas
+    document.getElementById("bmostra").addEventListener("click",mostralistas);
+
+    function mostralistas() {
+      var listas = document.getElementsByClassName("listaT");
+
+      console.log(listas);
+
+      for(var i=0; i< listas.length; i++) {
+        if (listas[i].style.visibility == "hidden") {
+          listas[i].style.visibility = "visible";
+        } else {
+          listas[i].style.visibility = "hidden"
+        }
+
+      }
+
+    }
+
+    var lista = document.getElementById("lista1");
+    var ul = document.createElement("ul");
+
+    lista.appendChild(ul);
+
+    for (var i=0; i < info.length ; i++) {
+      var novoli = document.createElement("li");
+      novoli.innerHTML = info[i].nome +
+                         " " +
+                         info[i].apelido +
+                         " " +
+                         info[i].telefone;
+      ul.appendChild(novoli);
+    };
+
+    // criar lista telefonica baseada em info2
+    // no meio do div#lista1 e div#lista2
+
+    refreshlista3();
+
+    function refreshlista3 () {
+
+    var lista3 = document.getElementById("lista3");
+
+    if (lista3 != null) {
+      document.body.removeChild(lista3);
+    }
+
+    var divantes = document.getElementById("lista2");
+
+    var novodiv = document.createElement("div");
+    novodiv.setAttribute("id", "lista3");
+    novodiv.setAttribute("class", "listaT");
+
+    var ul = document.createElement("ul");
+    novodiv.appendChild(ul);
+
+    for (var i=0; i < info2.lista.length ; i++) {
+      var novoli = document.createElement("li");
+      novoli.innerHTML = info2.lista[i].nome +
+                         " " +
+                         info2.lista[i].apelido +
+                         " " +
+                         info2.lista[i].telefone;
+      ul.appendChild(novoli);
+    };
+
+
+    document.body.insertBefore(novodiv,divantes);
+  }
+
+
+
+
+
+
+
+
+
+    //debugger;
+
+  </script>
+</html>
